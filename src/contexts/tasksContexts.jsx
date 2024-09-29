@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
-import { getTasks } from "../service/getTasks";
 
 export const TasksContext = createContext();
 
@@ -60,11 +59,11 @@ export function TasksProvider({ children }) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  useEffect(() => {
-    getTasks()
-      .then((data) => setTasks(data))
-      .catch(() => toast.error("Erro ao carregar suas tarefas"));
-  }, []);
+  // useEffect(() => {
+  //   getTasks()
+  //     .then((data) => setTasks(data))
+  //     .catch(() => toast.error("Erro ao carregar suas tarefas"));
+  // }, []);
 
   return (
     <TasksContext.Provider

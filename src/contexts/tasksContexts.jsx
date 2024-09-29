@@ -1,24 +1,25 @@
 import { createContext, useState } from "react";
+import { v4 as uuid } from "uuid";
 
 export const TasksContext = createContext();
 
 export function TasksProvider({ children }) {
   const [tasks, setTasks] = useState([
     {
-      id: 1,
+      id: uuid(),
       title: "Estudar React",
       description: "Estudar React com o curso da Rocketseat",
       isCompleted: false,
     },
     {
-      id: 2,
+      id: uuid(),
       title: "Estudar Next.js",
       description:
         "Estudar Next.js com o curso da Rocketseat e criar um projeto do zero",
       isCompleted: false,
     },
     {
-      id: 3,
+      id: uuid(),
       title: "Estudar TypeScript",
       description:
         "Estudar TypeScript com o curso da Rocketseat e criar um projeto do zero e subir no GitHub",
@@ -53,9 +54,25 @@ export function TasksProvider({ children }) {
     setTasks(updatedTaskList);
   };
 
+  const onAddNewTask = (title, description) => {
+    const newTask = {
+      id: uuid(),
+      title,
+      description,
+      isCompleted: false,
+    };
+
+    setTasks([...tasks, newTask]);
+  };
+
   return (
     <TasksContext.Provider
-      value={{ tasks, onTaskClickChangeCompleted, onDeletedTaksById }}
+      value={{
+        tasks,
+        onAddNewTask,
+        onTaskClickChangeCompleted,
+        onDeletedTaksById,
+      }}
     >
       {children}
     </TasksContext.Provider>

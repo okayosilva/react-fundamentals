@@ -1,32 +1,14 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
+import { getTasks } from "../service/getTasks";
 
 export const TasksContext = createContext();
 
 export function TasksProvider({ children }) {
-  const [tasks, setTasks] = useState([
-    {
-      id: uuid(),
-      title: "Estudar React",
-      description: "Estudar React com o curso da Rocketseat",
-      isCompleted: false,
-    },
-    {
-      id: uuid(),
-      title: "Estudar Next.js",
-      description:
-        "Estudar Next.js com o curso da Rocketseat e criar um projeto do zero",
-      isCompleted: false,
-    },
-    {
-      id: uuid(),
-      title: "Estudar TypeScript",
-      description:
-        "Estudar TypeScript com o curso da Rocketseat e criar um projeto do zero e subir no GitHub",
-      isCompleted: false,
-    },
-  ]);
+  const [tasks, setTasks] = useState(
+    JSON.parse(localStorage.getItem("tasks")) || [],
+  );
 
   const validateExistTask = (taskId) => {
     const taskValidate = tasks.find((task) => task.id === taskId);
@@ -73,6 +55,16 @@ export function TasksProvider({ children }) {
 
     return task;
   };
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  useEffect(() => {
+    getTasks()
+      .then((data) => setTasks(data))
+      .catch(() => toast.error("Erro ao carregar suas tarefas"));
+  }, []);
 
   return (
     <TasksContext.Provider

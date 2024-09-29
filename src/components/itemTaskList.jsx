@@ -18,7 +18,7 @@ export function ItemTaskList(props) {
         className={`flex flex-1 items-center gap-2 rounded-md bg-slate-400 p-2 text-left text-white ${isCompleted && "line-through"}`}
       >
         {isCompleted && <Check className="text-slate-100" />}
-        {title}
+        <span className="line-clamp-1">{title}</span>
       </button>
       <button
         onClick={handleClickTaskDetails}

@@ -24,7 +24,7 @@ export function TaskDetails() {
 
   return (
     <section className="flex min-h-screen w-screen flex-col items-center bg-slate-500 p-6">
-      <div className="max-w-[500px] space-y-4">
+      <div className="w-[500px] space-y-4">
         <header className="relative flex w-full items-center justify-center gap-2 text-3xl font-bold text-slate-200">
           <button onClick={handleGoBack} className="absolute left-0">
             <ChevronLeft />

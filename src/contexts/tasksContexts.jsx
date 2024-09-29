@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
 
 export const TasksContext = createContext();
@@ -30,7 +31,7 @@ export function TasksProvider({ children }) {
   const validateExistTask = (taskId) => {
     const taskValidate = tasks.find((task) => task.id === taskId);
 
-    if (!taskValidate) return console.log("error, task not exist");
+    if (!taskValidate) return toast.error("Tarefa não encontrada");
   };
 
   const onTaskClickChangeCompleted = (taksId) => {
@@ -65,6 +66,14 @@ export function TasksProvider({ children }) {
     setTasks([...tasks, newTask]);
   };
 
+  const onGetTaskById = (taskId) => {
+    if (validateExistTask(taskId)) return;
+
+    const task = tasks.find((task) => task.id === taskId);
+
+    return task;
+  };
+
   return (
     <TasksContext.Provider
       value={{
@@ -72,6 +81,7 @@ export function TasksProvider({ children }) {
         onAddNewTask,
         onTaskClickChangeCompleted,
         onDeletedTaksById,
+        onGetTaskById,
       }}
     >
       {children}

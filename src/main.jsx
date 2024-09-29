@@ -3,14 +3,16 @@ import { createRoot } from "react-dom/client";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import App from "./App.jsx";
+import { RouterProvider } from "react-router-dom";
+
 import { TasksProvider } from "./contexts/tasksContexts.jsx";
 import "./index.css";
+import { Routes } from "./router/routes.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <TasksProvider>
-      <App />
+      <RouterProvider router={Routes()} />
     </TasksProvider>
     <ToastContainer />
   </StrictMode>,
